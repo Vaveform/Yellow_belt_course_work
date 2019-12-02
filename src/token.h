@@ -1,15 +1,22 @@
-/*
- * token.h
- *
- *  Created on: 2 дек. 2019 г.
- *      Author: max
- */
+#pragma once
 
-#ifndef TOKEN_H_
-#define TOKEN_H_
+#include <sstream>
+#include <vector>
+using namespace std;
 
+enum class TokenType {
+  DATE,
+  EVENT,
+  COLUMN,
+  LOGICAL_OP,
+  COMPARE_OP,
+  PAREN_LEFT,
+  PAREN_RIGHT,
+};
 
+struct Token {
+  const string value;
+  const TokenType type;
+};
 
-
-
-#endif /* TOKEN_H_ */
+vector<Token> Tokenize(istream& cl);

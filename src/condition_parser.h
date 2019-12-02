@@ -1,15 +1,12 @@
-/*
- * condition_parser.h
- *
- *  Created on: 2 дек. 2019 г.
- *      Author: max
- */
+#pragma once
 
-#ifndef CONDITION_PARSER_H_
-#define CONDITION_PARSER_H_
+#include "node.h"
 
+#include <memory>
+#include <iostream>
 
+using namespace std;
 
+shared_ptr<Node> ParseCondition(istream& is);
 
-
-#endif /* CONDITION_PARSER_H_ */
+void TestParseCondition();
