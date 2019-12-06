@@ -52,7 +52,8 @@ template <class It> shared_ptr<Node> ParseComparison(It& current, It end) {
   if (column.value == "date") {
     istringstream is(value);
     return make_shared<DateComparisonNode>(cmp, ParseDate(is));
-  } else {
+  }
+  else {
     return make_shared<EventComparisonNode>(cmp, value);
   }
 }
@@ -72,7 +73,8 @@ shared_ptr<Node> ParseExpression(It& current, It end, unsigned precedence) {
       throw logic_error("Missing right paren");
     }
     ++current; // consume ')'
-  } else {
+  }
+  else {
     left = ParseComparison(current, end);
   }
 

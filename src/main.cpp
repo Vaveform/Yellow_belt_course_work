@@ -6,17 +6,26 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <map>
+#include <algorithm>
 
 using namespace std;
 
-string ParseEvent(istream& is) {
-  // � еализуйте эту функцию
+string ParseEvent(istream& is)
+{
+	string result;
+	getline(is, result, '\n');
+	auto pos = find_if(result.begin(), result.end(), [](const char& elem){
+		return elem != ' ';
+	});
+	result.erase(result.begin(),pos);
+	return result;
 }
 
 void TestAll();
 
 int main() {
-  TestAll();
+    TestAll();
 
   Database db;
 
@@ -61,7 +70,6 @@ int main() {
       throw logic_error("Unknown command: " + command);
     }
   }
-
   return 0;
 }
 
