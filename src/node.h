@@ -17,3 +17,7 @@ enum class LogicalOperation {
 	And,
 	Or,
 };
+
+class Node{
+	virtual
+}
