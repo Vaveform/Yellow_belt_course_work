@@ -41,7 +41,7 @@ int main() {
     } else if (command == "Print") {
       db.Print(cout);
     } else if (command == "Del") {
-      auto condition = ParseCondition(is);
+      auto condition = ParseCondition(is); // shared_ptr<Node> condition
       auto predicate = [condition](const Date& date, const string& event) {
         return condition->Evaluate(date, event);
       };
