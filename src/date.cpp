@@ -7,7 +7,7 @@ Date::Date()
 	year = 0;
 }
 
-Date::Date(const int& new_day, const int& new_month, const int& new_year)
+Date::Date(const int& new_year, const int& new_month, const int& new_day)
 {
 	day = new_day;
 	month = new_month;
@@ -26,9 +26,29 @@ int Date::GetYear() const{
 }
 
 bool Date::operator< (const Date& rhd) const{
-	int sum_days_lhd = 12 * 31 * year + 31 * month + day;
-	int sum_days_rhd = 12 * 31 * rhd.GetYear() + 31 * rhd.GetMonth() + rhd.GetDay();
-	return sum_days_lhd < sum_days_rhd;
+	return (year < rhd.GetYear()) ? true : (month < rhd.GetMonth()) ?
+				true : (day < rhd.GetDay()) ? true : false;
+}
+
+bool Date::operator> (const Date& rhd) const{
+	return (year > rhd.GetYear()) ? true : (month > rhd.GetMonth()) ?
+			true : (day > rhd.GetDay()) ? true : false;
+}
+
+bool Date::operator ==(const Date& rhd) const{
+	return ((year == rhd.GetYear()) && (month == rhd.GetMonth()) && (day == rhd.GetDay()));
+}
+
+bool Date::operator !=(const Date& rhd) const{
+	return !(*this == rhd);
+}
+
+bool Date::operator<= (const Date& rhd) const{
+	return !(*this > rhd);
+}
+
+bool Date::operator>= (const Date& rhd) const{
+	return !(*this < rhd);
 }
 
 std::ostream& operator<<(std::ostream& stream, const Date& d){
@@ -62,7 +82,7 @@ Date ParseDate(std::istream& stream){
 				throw std::runtime_error("Day value is invalid: " + std::to_string(new_day));
 			}
 			else{
-				return Date(new_day, new_month, new_year);
+				return Date(new_year, new_month, new_day);
 			}
 		}
 	}

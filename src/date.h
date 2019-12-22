@@ -14,11 +14,16 @@ private:
 	int year;
 public:
 	Date();
-	Date(const int& new_day, const int& new_month, const int& new_year);
+	Date(const int& new_year, const int& new_month, const int& new_day);
 	int GetDay() const;
 	int GetMonth() const;
 	int GetYear() const;
 	bool operator< (const Date& rhd) const;
+	bool operator> (const Date& rhd) const;
+	bool operator==(const Date& rhd) const;
+	bool operator!=(const Date& rhd) const;
+	bool operator<=(const Date& rhd) const;
+	bool operator>=(const Date& rhd) const;
 	friend std::ostream& operator<<(std::ostream& stream, const Date& d);
 };
 

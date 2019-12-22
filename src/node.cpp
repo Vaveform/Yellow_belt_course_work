@@ -1,6 +1,9 @@
 #include "node.h"
 
-
+bool EmptyNode::Evaluate(const Date& date, const string& event) const
+{
+	return true;
+}
 DateComparisonNode::DateComparisonNode(const enum Comparison cmp,
 		const Date d) : _type(cmp), _date(d) {}
 bool DateComparisonNode::Evaluate(const Date& date, const string& event) const
@@ -20,7 +23,8 @@ bool DateComparisonNode::Evaluate(const Date& date, const string& event) const
 	else if(this->_type == Comparison::LessOrEqual){
 		return date <= this->_date;
 	}
-	else{
+	else if(this->_type == Comparison::NotEqual)
+	{
 		return date != this->_date;
 	}
 }

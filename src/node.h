@@ -21,11 +21,14 @@ enum class LogicalOperation {
 };
 
 class Node{
+public:
 	virtual bool Evaluate(const Date& date, const string& event) const = 0;
 };
 
-class EmptyNode : public Node{
-
+class EmptyNode : public Node
+{
+public:
+	bool Evaluate(const Date& date, const string& event) const override;
 };
 
 class DateComparisonNode : public Node{
