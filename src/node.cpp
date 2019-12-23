@@ -48,7 +48,8 @@ bool EventComparisonNode::Evaluate(const Date & date, const string & event) cons
 	else if(this->_type == Comparison::LessOrEqual){
 		return event <= this->_event;
 	}
-	else{
+	else if(this->_type == Comparison::NotEqual)
+	{
 		return event != this->_event;
 	}
 }

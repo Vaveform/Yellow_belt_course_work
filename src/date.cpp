@@ -5,6 +5,7 @@ Date::Date()
 	day = 0;
 	month = 0;
 	year = 0;
+	summ_day = 0;
 }
 
 Date::Date(const int& new_year, const int& new_month, const int& new_day)
@@ -12,6 +13,7 @@ Date::Date(const int& new_year, const int& new_month, const int& new_day)
 	day = new_day;
 	month = new_month;
 	year = new_year;
+	summ_day = day + 31 * month + 12 * 31 * year;
 }
 int Date::GetDay() const {
 	return day;
@@ -25,14 +27,17 @@ int Date::GetYear() const{
 	return year;
 }
 
-bool Date::operator< (const Date& rhd) const{
-	return (year < rhd.GetYear()) ? true : (month < rhd.GetMonth()) ?
-				true : (day < rhd.GetDay()) ? true : false;
+int Date::GetSummDay() const{
+	return summ_day;
+}
+
+bool Date::operator< (const Date& rhd) const
+{
+	return summ_day < rhd.GetSummDay();
 }
 
 bool Date::operator> (const Date& rhd) const{
-	return (year > rhd.GetYear()) ? true : (month > rhd.GetMonth()) ?
-			true : (day > rhd.GetDay()) ? true : false;
+	return summ_day > rhd.GetSummDay();
 }
 
 bool Date::operator ==(const Date& rhd) const{
