@@ -9,6 +9,7 @@
 #include <utility>
 #include <stdexcept>
 #include <exception>
+#include <algorithm>
 
 using namespace std;
 
@@ -59,6 +60,27 @@ public:
 				begin_vec = begin_key->second.begin();
 			}
 		}
+		return result;
+	}
+	template <typename Func>
+	int RemoveIf(Func predicate)
+	{
+		int result = 0;
+		for(auto it = data.begin(); it != data.end(); ++it)
+		{
+			result += it->second.size();
+			auto pointer = stable_partition(it->second.begin(), it->second.end(), [it, predicate](const string& e){
+				return !(predicate(it->first, e));
+			});
+			it->second.erase(pointer, it->second.end());
+			result -= it->second.size();
+		}
+//		for(auto it = repeated.begin(); it != repeated.end(); ++it)
+//		{
+//			remove_if(it->second.begin(), it->second.end(), [it, predicate](auto e){
+//				return predicate(it->first, e);
+//			});
+//		}
 		return result;
 	}
 };

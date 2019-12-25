@@ -42,15 +42,15 @@ int main() {
     {
       db.Print(cout);
     }
-//    else if (command == "Del")
-//    {
-//      auto condition = ParseCondition(is); // shared_ptr<Node> condition
-//      auto predicate = [condition](const Date& date, const string& event) {
-//        return condition->Evaluate(date, event);
-//      };
-//      int count = db.RemoveIf(predicate);
-//      cout << "Removed " << count << " entries" << endl;
-//    }
+    else if (command == "Del")
+    {
+      auto condition = ParseCondition(is); // shared_ptr<Node> condition
+      auto predicate = [condition](const Date& date, const string& event) {
+        return condition->Evaluate(date, event);
+      };
+      int count = db.RemoveIf(predicate);
+      cout << "Removed " << count << " entries" << endl;
+    }
     else if (command == "Find")
     {
       auto condition = ParseCondition(is);
