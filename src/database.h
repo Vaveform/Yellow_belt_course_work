@@ -22,9 +22,11 @@ public:
 	Date GetDate() const;
 	string GetEvent() const;
 	friend ostream& operator<<(ostream& stream, const Entry& pair);
+	friend bool operator!=(const Entry& lhd, const Entry& rhd);
 };
 
 ostream& operator<<(ostream& stream, const Entry& pair);
+bool operator!=(const Entry& lhd, const Entry& rhd);
 
 class Database
 {
@@ -36,7 +38,7 @@ public:
 	void Print(ostream& output) const;
 	Entry Last(const Date& date) const;
 	template <typename Func>
-	vector<Entry> FindIf(Func predicate)
+	vector<Entry> FindIf(Func predicate) const
 	{
 		vector<Entry> result;
 		auto begin_key = data.begin();
@@ -66,19 +68,28 @@ public:
 	int RemoveIf(Func predicate)
 	{
 		int result = 0;
-		set<string> tmp_set;
+		vector<Date> deleted_date;
+		repeated.clear();
 		for(auto it = data.begin(); it != data.end(); ++it)
 		{
 			result += it->second.size();
 			auto pointer = stable_partition(it->second.begin(), it->second.end(), [it, predicate](const string& e){
-				return !(predicate(it->first, e));
+				return !predicate(it->first, e);
 			});
 			it->second.erase(pointer, it->second.end());
-			tmp_set.insert(it->second.begin(), pointer);
-			repeated.at(it->first).swap(tmp_set);
 			result -= it->second.size();
-			tmp_set.clear();
+			repeated[it->first].insert(it->second.begin(), pointer);
+			if(repeated.at(it->first).size() == 0)
+			{
+				deleted_date.push_back(it->first);
+			}
 		}
+		for(auto it = deleted_date.begin(); it != deleted_date.end(); ++it)
+		{
+			data.erase(*it);
+			repeated.erase(*it);
+		}
+		deleted_date.clear();
 		return result;
 	}
 };
