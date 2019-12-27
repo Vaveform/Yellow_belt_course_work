@@ -66,6 +66,7 @@ public:
 	int RemoveIf(Func predicate)
 	{
 		int result = 0;
+		set<string> tmp_set;
 		for(auto it = data.begin(); it != data.end(); ++it)
 		{
 			result += it->second.size();
@@ -73,14 +74,11 @@ public:
 				return !(predicate(it->first, e));
 			});
 			it->second.erase(pointer, it->second.end());
+			tmp_set.insert(it->second.begin(), pointer);
+			repeated.at(it->first).swap(tmp_set);
 			result -= it->second.size();
+			tmp_set.clear();
 		}
-//		for(auto it = repeated.begin(); it != repeated.end(); ++it)
-//		{
-//			remove_if(it->second.begin(), it->second.end(), [it, predicate](auto e){
-//				return predicate(it->first, e);
-//			});
-//		}
 		return result;
 	}
 };
