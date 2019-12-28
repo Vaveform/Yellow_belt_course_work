@@ -1,5 +1,28 @@
 #include "node.h"
 
+template <class T>
+bool Compare(const T& lhs, const T& rhd, Comparison cmp)
+{
+	if(cmp == Comparison::Equal){
+		return lhs == rhd;
+	}
+	else if(cmp == Comparison::Greater){
+		return lhs > rhd;
+	}
+	else if(cmp == Comparison::GreaterOrEqual){
+		return lhs >= rhd;
+	}
+	else if(cmp == Comparison::Less){
+		return lhs < rhd;
+	}
+	else if(cmp == Comparison::LessOrEqual){
+		return lhs <= rhd;
+	}
+	else{
+		return lhs != rhd;
+	}
+}
+
 bool EmptyNode::Evaluate(const Date& date, const string& event) const
 {
 	return true;
@@ -8,48 +31,14 @@ DateComparisonNode::DateComparisonNode(const enum Comparison cmp,
 		const Date d) : _type(cmp), _date(d) {}
 bool DateComparisonNode::Evaluate(const Date& date, const string& event) const
 {
-	if(this->_type == Comparison::Equal){
-		return date == this->_date;
-	}
-	else if(this->_type == Comparison::Greater){
-		return date > this->_date;
-	}
-	else if(this->_type == Comparison::GreaterOrEqual){
-		return date >= this->_date;
-	}
-	else if(this->_type == Comparison::Less){
-		return date < this->_date;
-	}
-	else if(this->_type == Comparison::LessOrEqual){
-		return date <= this->_date;
-	}
-	else{
-		return date != this->_date;
-	}
+	return Compare(date, _date, _type);
 }
 
 EventComparisonNode::EventComparisonNode(const enum Comparison cmp,
 		const string e) : _type(cmp), _event(e) {}
 bool EventComparisonNode::Evaluate(const Date & date, const string & event) const
 {
-	if(this->_type == Comparison::Equal){
-		return event == this->_event;
-	}
-	else if(this->_type == Comparison::Greater){
-		return event > this->_event;
-	}
-	else if(this->_type == Comparison::GreaterOrEqual){
-		return event >= this->_event;
-	}
-	else if(this->_type == Comparison::Less){
-		return event < this->_event;
-	}
-	else if(this->_type == Comparison::LessOrEqual){
-		return event <= this->_event;
-	}
-	else{
-		return event != this->_event;
-	}
+	return Compare(event, _event, _type);
 }
 
 LogicalOperationNode::LogicalOperationNode(enum LogicalOperation op,
